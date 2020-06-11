@@ -1,159 +1,198 @@
-document.addEventListener("DOMContentLoaded",()=>{
-    let elements = document.getElementsByTagName("td")
-    let result = ""
+document.addEventListener("DOMContentLoaded", ()=>{
     let output = document.getElementsByClassName("output")[0]
-    let integer_one = ""
+    let buttons = document.getElementsByTagName("td")
+    let firstNum = ""
     let operator = ""
-    let integer_two = ""
+    let secondNum = ""
 
-    let addToResult = value => {
-        if(integer_one == "" && value == '-'){
-            integer_one += value
-            result += integer_one
-        }
-        else if(integer_one == "-" && !isNaN(value)){
-            integer_one += value
-            result += integer_one
-        }else if(integer_one !== "" && isNaN(value)){
-            operator = value
-            result += operator
-        }else if(operator !== '' && value == '-' && integer_two == ""){
-            integer_two += value
-            result += integer_two
-        }else if(integer_two == '-' && !isNaN(value)){
-            integer_two += value
-            result += integer_two
-        }
-        // if(result)
-        // if((result.length == 0 && (value == "/" || value == "*")) || result.length > 15)return
-        // if(isNaN(value) && checkOperatorsInResult()){
-        //     equals()
-        // }
-        // {
-        //     integer_two += value
-        // }
-        // else(operator.length == 0 && isNaN(value))
-        // {
-        //     operator += value
-        // }
-     
-    }
-
-    let updateOutput = () => {
-        console.log(result)
-        console.log(integer_one)
-        console.log(operator)
-        console.log(integer_two)
-        output.innerHTML = result
-    }
-
-    let cancel = () => {
-        result = ""
-    }
-
-    let deleteASymbol = () => {
-        if(result.length!=0){
-            let result_array = result.split("")
-            result_array.pop()
-            result = result_array.join("")
-        }else{
+    let addToOutput = value => {
+        if(firstNum.length > 10){
+            alert("A number can't exceed 10 symbols")
             return
+        }else if(secondNum.length > 10){
+            alert("A number can't exceed 10 symbols")
+            return
+        }else{
+            if(!isNaN(value) && operator.length == 0){
+                firstNum += value
+                output.innerHTML = firstNum
+            }
+            else if(isNaN(value))
+            {
+                if(firstNum.length == 0 && value == "-"){
+                    firstNum = value
+                    output.innerHTML = firstNum
+                }else if(!firstNum.includes("-") && firstNum.length > 0 && isNaN(value) || firstNum.includes("-") && firstNum.length > 1 && isNaN(value)){
+                    operator = value
+                    output.innerHTML = firstNum + " " + operator
+                }else{
+                    alert("Please enter the first number")
+                }
+            }
+            else if(firstNum.length > 0 && operator.length == 1){
+                secondNum += value
+                output.innerHTML = firstNum + " " + operator + " " + secondNum
+            }
+            console.log(firstNum)
+            console.log(operator)
+            console.log(secondNum)
         }
     }
 
-    let equals = () => {
-        if(result.includes("+"))
-            {
-                result = result.split("+")
-                result = addition(result[0], result[1])
-            }
-            else if(result.includes("-"))
-            {   
-                result = result.split("-")
-                result = substraction(result[0], result[1])
-            }
-            else if(result.includes("*"))
-            {
-                result = result.split("*")
-                result = multiply(result[0], result[1])
-            }
-            else if(result.includes("/"))
-            {
-                result = result.split("/")
-                result = division(result[0], result[1])
-            }
-            else
-            {
-                alert("sorry, output doesnt include any of the four operators")
-            }
+    let del = value => {
+        output.innerHTML = output.innerHTML.slice(0, -1)
+        firstNum = firstNum.slice(0, -1)
+    }
+
+    let clear = value => {
+        output.innerHTML = ""
+        firstNum = ""
+        operator = ""
+        secondNum = ""
     }
 
     let addition = (a, b) => {
-        return Number(a) + Number(b)
+        output.innerHTML = Number(a) + Number(b)
+        firstNum = (Number(a) + Number(b)).toString()
+        operator = ""
+        secondNum = ""
     }
 
-    let substraction = (a, b) => {
-        return Number(a) - Number(b)
+    let subtraction = (a, b) => {
+        output.innerHTML = Number(a) - Number(b)
+        firstNum = (Number(a) - Number(b)).toString()
+        operator = ""
+        secondNum = ""
     }
 
     let multiply = (a, b) => {
-        if(Number(a) == 0 || Number(b) == 0) return 0
-        return Number(a) * Number(b)
+        if(Number(a) == 0 || Number(b) == 0){
+            output.innerHTML = 0
+            firstNum = "0"
+            operator = ""
+            secondNum = ""
+        }else{
+            output.innerHTML = Number(a) * Number(b)
+            firstNum = (Number(a) * Number(b)).toString()
+            operator = ""
+            secondNum = ""
+        }
     }
 
     let division = (a, b) => {
         if(Number(b) == 0)
         {
-            alert("Division by zero is not an option")
-            return ""
+            output.innerHTML = "Division by zero"
+            firstNum = ""
+            operator = ""
+            secondNum = ""
         }
         else(Number(a) == 0)
         {
-            return 0
+            output.innerHTML = 0
+            firstNum = "0"
+            operator = ""
+            secondNum = ""
         }
-        return Number(a) / Number(b)
+            output.innerHTML = Number(a) / Number(b)
+            firstNum = (Number(a) / Number(b)).toString()
+            operator = ""
+            secondNum = ""
     }
 
-    let checkOperatorsInResult = () => {
-        if(result.includes("+") || result.includes("-") || result.includes("*") || result.includes("/")){
-            return true
-        }
-        return false
+    let equals = value => {
+        if(operator == "+")
+            {
+               addition(firstNum,secondNum)
+            }
+            else if(operator == "-")
+            {   
+                subtraction(firstNum, secondNum)
+            }
+            else if(operator == "/")
+            {   
+                division(firstNum, secondNum)
+            }
+            else if(operator == "*")
+            {   
+                multiply(firstNum, secondNum)
+            }
+            else
+            {
+                alert("Your Equals func has an error or you are trying to equal nothing")
+            }
     }
 
-    for(let i = 0; i < elements.length; i++){
-        let elem = elements[i]
-        if(elem.classList.value == "extraButtons" && elem.id == "delete")
-        {
-            elem.addEventListener("click", function(event){
-                deleteASymbol()
-                updateOutput()
-            })
-            
+    for(let i = 0; i < buttons.length; i++){
+        if(buttons[i].classList.value == "extraButtons"){
+            if(buttons[i].id == "delete"){
+                buttons[i].addEventListener("click", ()=>{
+                    del()
+                })
+            }else if(buttons[i].id == "clear"){
+                buttons[i].addEventListener("click", ()=>{
+                    clear()
+                })
+            }else if(buttons[i].id == "equals"){
+                buttons[i].addEventListener("click", ()=>{
+                    equals()
+                })
+            }else{
+                console.log("couldnt find id of extra button or something")
+            }
         }
-        else if(elem.classList.value == "extraButtons" && elem.id == "cancel")
-        {
-            elem.addEventListener("click", function(event){
-                cancel()
-                updateOutput()
-            })
-            
-        }
-        else if(elem.classList.value == "extraButtons" && elem.id == "equals")
-        {
-            elem.addEventListener("click", function(event){
-                equals()
-                updateOutput()
-            })
-            
+        else if(buttons[i].classList.value == "operator"){
+            if(buttons[i].id == "add"){
+                buttons[i].addEventListener("click", e=>{
+                    if(secondNum.length != 0){
+                        output.innerHTML = (Number(firstNum) + Number(secondNum)).toString()
+                        firstNum = output.innerHTML
+                        operator = "+"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.target.innerHTML)
+                    }
+                })
+            }else if(buttons[i].id == "subtract"){
+                buttons[i].addEventListener("click", e=>{
+                    if(secondNum.length != 0){
+                        output.innerHTML = (Number(firstNum) - Number(secondNum)).toString()
+                        firstNum = output.innerHTML
+                        operator = "-"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.target.innerHTML)
+                    }
+                })
+            }else if(buttons[i].id == "divide"){
+                buttons[i].addEventListener("click", e=>{
+                    if(secondNum.length != 0){
+                        output.innerHTML = (Number(firstNum) / Number(secondNum)).toString()
+                        firstNum = output.innerHTML
+                        operator = "/"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.target.innerHTML)
+                    }
+                })
+            }else{
+                buttons[i].addEventListener("click", e=>{
+                    if(secondNum.length != 0){
+                        output.innerHTML = (Number(firstNum) * Number(secondNum)).toString()
+                        firstNum = output.innerHTML
+                        operator = "*"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.target.innerHTML)
+                    }
+                })
+            }
         }
         else
         {
-            elem.addEventListener("click", function(event){
-                addToResult(event.target.textContent)
-                updateOutput()
+            buttons[i].addEventListener("click", e=>{
+                addToOutput(e.target.innerHTML)
             })
         }
-        
     }
 })
