@@ -19,15 +19,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }
             else if(isNaN(value))
             {
-                if(firstNum.length == 0 && value == "-"){
-                    firstNum = value
-                    output.innerHTML = firstNum
-                }else if(!firstNum.includes(value) && value == "."){
+                if(!firstNum.includes(".") && value == "." && operator.length == 0|| firstNum.length == 0 && value == "-"){
                     firstNum += value
                     output.innerHTML = firstNum
-                }else if(!firstNum.includes("-") && firstNum.length > 0 && isNaN(value) && !value == "." || firstNum.includes("-") && firstNum.length > 1 && isNaN(value) && !value == "." || firstNum.includes(".") && isNaN(value)){
+                }else if(!firstNum.includes("-") && firstNum.length > 0 && isNaN(value) && !value == "." || firstNum.includes("-") && firstNum.length > 1 && isNaN(value) && !value == "." || firstNum.length > 0 && "+-/*".includes(value)){
                     operator = value
                     output.innerHTML = firstNum + " " + operator
+                }else if(!secondNum.includes(value) && value == "." || secondNum.length == 0 && value == "-"){
+                    secondNum += value
+                    output.innerHTML = firstNum + " " + operator + " " + secondNum
                 }else{
                     alert("Woopsy, what you are trying to do is illegal, pleace proceede according to common sense")
                 }
@@ -62,10 +62,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
 
     let subtraction = (a, b) => {
-        output.innerHTML = (Number(a) - Number(b)).toFixed(8).toString()
-        output.innerHTML = Number(output.innerHTML)
-        firstNum = Number(a) - Number(b)
-        firstNum = Number(firstNum.toFixed(8).toString())
+        output.innerHTML = (Number(a) - Number(b)).toString()
+        firstNum = (Number(a) - Number(b)).toString()
         operator = ""
         secondNum = ""
     }
