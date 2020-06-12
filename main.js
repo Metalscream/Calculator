@@ -22,11 +22,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 if(firstNum.length == 0 && value == "-"){
                     firstNum = value
                     output.innerHTML = firstNum
-                }else if(!firstNum.includes("-") && firstNum.length > 0 && isNaN(value) || firstNum.includes("-") && firstNum.length > 1 && isNaN(value)){
+                }else if(!firstNum.includes(value) && value == "."){
+                    firstNum += value
+                    output.innerHTML = firstNum
+                }else if(!firstNum.includes("-") && firstNum.length > 0 && isNaN(value) && !value == "." || firstNum.includes("-") && firstNum.length > 1 && isNaN(value) && !value == "." || firstNum.includes(".") && isNaN(value)){
                     operator = value
                     output.innerHTML = firstNum + " " + operator
                 }else{
-                    alert("Please enter the first number")
+                    alert("Woopsy, what you are trying to do is illegal, pleace proceede according to common sense")
                 }
             }
             else if(firstNum.length > 0 && operator.length == 1){
@@ -59,8 +62,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
 
     let subtraction = (a, b) => {
-        output.innerHTML = Number(a) - Number(b)
-        firstNum = (Number(a) - Number(b)).toString()
+        output.innerHTML = (Number(a) - Number(b)).toFixed(8).toString()
+        output.innerHTML = Number(output.innerHTML)
+        firstNum = Number(a) - Number(b)
+        firstNum = Number(firstNum.toFixed(8).toString())
         operator = ""
         secondNum = ""
     }
@@ -87,17 +92,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
             operator = ""
             secondNum = ""
         }
-        else(Number(a) == 0)
+        else if(Number(a) == 0)
         {
             output.innerHTML = 0
             firstNum = "0"
             operator = ""
             secondNum = ""
         }
+        else
+        {
             output.innerHTML = Number(a) / Number(b)
             firstNum = (Number(a) / Number(b)).toString()
             operator = ""
             secondNum = ""
+        }
     }
 
     let equals = value => {
