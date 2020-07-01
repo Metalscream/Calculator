@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", ()=>{
     let output = document.getElementsByClassName("output")[0]
     let buttons = document.getElementsByTagName("td")
@@ -6,26 +7,26 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let secondNum = ""
 
     let addToOutput = value => {
-        if(firstNum.length > 10){
-            alert("A number can't exceed 10 symbols")
+        if(firstNum.length > 14){
+            alert("A number can't exceed 14 symbols")
             return
-        }else if(secondNum.length > 10){
-            alert("A number can't exceed 10 symbols")
+        }else if(secondNum.length > 14){
+            alert("A number can't exceed 14 symbols")
             return
         }else{
             if(!isNaN(value) && operator.length == 0){
-                firstNum += value
+                firstNum += new Decimal(value)
                 output.innerHTML = firstNum
             }
             else if(isNaN(value))
             {
-                if(!firstNum.includes(".") && value == "." && operator.length == 0|| firstNum.length == 0 && value == "-"){
+                if(!firstNum.includes(".") && value == "." && operator.length == 0 || firstNum.length == 0 && value == "-"){
                     firstNum += value
                     output.innerHTML = firstNum
                 }else if(!firstNum.includes("-") && firstNum.length > 0 && isNaN(value) && !value == "." || firstNum.includes("-") && firstNum.length > 1 && isNaN(value) && !value == "." || firstNum.length > 0 && "+-/*".includes(value)){
                     operator = value
                     output.innerHTML = firstNum + " " + operator
-                }else if(!secondNum.includes(value) && value == "." || secondNum.length == 0 && value == "-"){
+                }else if(!secondNum.includes(value) && value == "." && operator.length == 1 || secondNum.length == 0 && value == "-"){
                     secondNum += value
                     output.innerHTML = firstNum + " " + operator + " " + secondNum
                 }else{
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 }
             }
             else if(firstNum.length > 0 && operator.length == 1){
-                secondNum += value
+                secondNum += new Decimal(value)
                 output.innerHTML = firstNum + " " + operator + " " + secondNum
             }
             console.log(firstNum)
@@ -55,15 +56,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
 
     let addition = (a, b) => {
-        output.innerHTML = Number(a) + Number(b)
-        firstNum = (Number(a) + Number(b)).toString()
+        output.innerHTML = Number((a+b).toPrecision(14).toString())
+        firstNum = output.innerHTML
         operator = ""
         secondNum = ""
     }
 
     let subtraction = (a, b) => {
-        output.innerHTML = (Number(a) - Number(b)).toString()
-        firstNum = (Number(a) - Number(b)).toString()
+        output.innerHTML = Number((a-b).toPrecision(14).toString())
+        firstNum = output.innerHTML
         operator = ""
         secondNum = ""
     }
@@ -75,8 +76,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             operator = ""
             secondNum = ""
         }else{
-            output.innerHTML = Number(a) * Number(b)
-            firstNum = (Number(a) * Number(b)).toString()
+            output.innerHTML = Number((a*b).toPrecision(14).toString())
+            firstNum = output.innerHTML
             operator = ""
             secondNum = ""
         }
@@ -99,8 +100,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
         else
         {
-            output.innerHTML = Number(a) / Number(b)
-            firstNum = (Number(a) / Number(b)).toString()
+            output.innerHTML = Number((a/b).toPrecision(14).toString())
+            firstNum = output.innerHTML
             operator = ""
             secondNum = ""
         }
@@ -151,8 +152,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             if(buttons[i].id == "add"){
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
-                        output.innerHTML = (Number(firstNum) + Number(secondNum)).toString()
-                        firstNum = output.innerHTML
+                        firstNum  = (Number(firstNum) + Number(secondNum)).toString()
+                        output.innerHTML = firstNum + " " + operator
                         operator = "+"
                         secondNum = ""
                     }else{
@@ -162,8 +163,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }else if(buttons[i].id == "subtract"){
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
-                        output.innerHTML = (Number(firstNum) - Number(secondNum)).toString()
-                        firstNum = output.innerHTML
+                        firstNum  = (Number(firstNum) - Number(secondNum)).toString()
+                        output.innerHTML = firstNum + " " + operator
                         operator = "-"
                         secondNum = ""
                     }else{
@@ -173,8 +174,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }else if(buttons[i].id == "divide"){
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
-                        output.innerHTML = (Number(firstNum) / Number(secondNum)).toString()
-                        firstNum = output.innerHTML
+                        firstNum  = (Number(firstNum) / Number(secondNum)).toString()
+                        output.innerHTML = firstNum + " " + operator
                         operator = "/"
                         secondNum = ""
                     }else{
@@ -184,8 +185,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }else{
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
-                        output.innerHTML = (Number(firstNum) * Number(secondNum)).toString()
-                        firstNum = output.innerHTML
+                        firstNum  = (Number(firstNum) * Number(secondNum)).toString()
+                        output.innerHTML = firstNum + " " + operator
                         operator = "*"
                         secondNum = ""
                     }else{
