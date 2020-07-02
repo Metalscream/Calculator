@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             return
         }else{
             if(!isNaN(value) && operator.length == 0){
-                firstNum += new Decimal(value)
+                firstNum += value
                 output.innerHTML = firstNum
             }
             else if(isNaN(value))
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 }
             }
             else if(firstNum.length > 0 && operator.length == 1){
-                secondNum += new Decimal(value)
+                secondNum += value
                 output.innerHTML = firstNum + " " + operator + " " + secondNum
             }
             console.log(firstNum)
@@ -56,14 +56,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
 
     let addition = (a, b) => {
-        output.innerHTML = Number((a+b).toPrecision(14).toString())
+        output.innerHTML = Number(parseFloat(Number(a)+Number(b)).toPrecision(14).toString()).toString()
         firstNum = output.innerHTML
         operator = ""
         secondNum = ""
     }
 
     let subtraction = (a, b) => {
-        output.innerHTML = Number((a-b).toPrecision(14).toString())
+        output.innerHTML = Number(parseFloat(Number(a)-Number(b)).toPrecision(14).toString()).toString()
         firstNum = output.innerHTML
         operator = ""
         secondNum = ""
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             operator = ""
             secondNum = ""
         }else{
-            output.innerHTML = Number((a*b).toPrecision(14).toString())
+            output.innerHTML = Number(parseFloat(Number(a)*Number(b)).toPrecision(14).toString()).toString()
             firstNum = output.innerHTML
             operator = ""
             secondNum = ""
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
         else
         {
-            output.innerHTML = Number((a/b).toPrecision(14).toString())
+            output.innerHTML = Number(parseFloat(Number(a)/Number(b)).toPrecision(14).toString()).toString()
             firstNum = output.innerHTML
             operator = ""
             secondNum = ""
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             if(buttons[i].id == "add"){
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
-                        firstNum  = (Number(firstNum) + Number(secondNum)).toString()
+                        firstNum  = Number(parseFloat(Number(firstNum)+Number(secondNum)).toPrecision(14).toString()).toString()
                         output.innerHTML = firstNum + " " + operator
                         operator = "+"
                         secondNum = ""
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }else if(buttons[i].id == "subtract"){
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
-                        firstNum  = (Number(firstNum) - Number(secondNum)).toString()
+                        firstNum  = Number(parseFloat(Number(firstNum)-Number(secondNum)).toPrecision(14).toString()).toString()
                         output.innerHTML = firstNum + " " + operator
                         operator = "-"
                         secondNum = ""
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }else if(buttons[i].id == "divide"){
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
-                        firstNum  = (Number(firstNum) / Number(secondNum)).toString()
+                        firstNum  = Number(parseFloat(Number(firstNum)/Number(secondNum)).toPrecision(14).toString()).toString()
                         output.innerHTML = firstNum + " " + operator
                         operator = "/"
                         secondNum = ""
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }else{
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
-                        firstNum  = (Number(firstNum) * Number(secondNum)).toString()
+                        firstNum  = Number(parseFloat(Number(firstNum)*Number(secondNum)).toPrecision(14).toString()).toString()
                         output.innerHTML = firstNum + " " + operator
                         operator = "*"
                         secondNum = ""
@@ -202,4 +202,49 @@ document.addEventListener("DOMContentLoaded", ()=>{
             })
         }
     }
+    document.addEventListener("keypress", e => {
+        console.log(e.key)
+        if("0123456789".includes(e.key)){
+            addToOutput(e.key)
+        }else{
+            switch (e.key){
+                case "+":
+                    if(secondNum.length != 0){
+                        firstNum  = Number(parseFloat(Number(firstNum)+Number(secondNum)).toPrecision(14).toString()).toString()
+                        output.innerHTML = firstNum + " " + operator
+                        operator = "+"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.key)
+                    }
+                case "-":
+                    if(secondNum.length != 0){
+                        firstNum  = Number(parseFloat(Number(firstNum)-Number(secondNum)).toPrecision(14).toString()).toString()
+                        output.innerHTML = firstNum + " " + operator
+                        operator = "-"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.key)
+                    }
+                case "/":
+                    if(secondNum.length != 0){
+                        firstNum  = Number(parseFloat(Number(firstNum)/Number(secondNum)).toPrecision(14).toString()).toString()
+                        output.innerHTML = firstNum + " " + operator
+                        operator = "/"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.key)
+                    }
+                case "*":
+                    if(secondNum.length != 0){
+                        firstNum  = Number(parseFloat(Number(firstNum)*Number(secondNum)).toPrecision(14).toString()).toString()
+                        output.innerHTML = firstNum + " " + operator
+                        operator = "*"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.key)
+                    }
+            }
+        }
+    })
 })
