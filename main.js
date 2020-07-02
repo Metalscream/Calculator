@@ -43,9 +43,18 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     }
 
-    let del = value => {
-        output.innerHTML = output.innerHTML.slice(0, -1)
-        firstNum = firstNum.slice(0, -1)
+    let del = () => {
+        if(operator.length == 0 && firstNum.length > 0){
+            firstNum = firstNum.slice(0, -1)
+        }else if(operator.length == 1 && secondNum.length == 0){
+            operator = ""
+        }else if(true){
+            secondNum = secondNum.slice(0, -1)
+        }else{
+            console.log("Sorry, something went wrong with deleting last character");
+            
+        }
+        output.innerHTML = firstNum + " " + operator + " " + secondNum
     }
 
     let clear = value => {
@@ -107,20 +116,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     }
 
-    let equals = value => {
-        if(operator == "+")
+    let equals = () => {
+        if(operator == "+" && secondNum.length > 0)
             {
                addition(firstNum,secondNum)
             }
-            else if(operator == "-")
+            else if(operator == "-" && secondNum.length > 0)
             {   
                 subtraction(firstNum, secondNum)
             }
-            else if(operator == "/")
+            else if(operator == "/" && secondNum.length > 0)
             {   
                 division(firstNum, secondNum)
             }
-            else if(operator == "*")
+            else if(operator == "*" && secondNum.length > 0)
             {   
                 multiply(firstNum, secondNum)
             }
@@ -245,6 +254,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         addToOutput(e.key)
                     }
             }
+        }
+    })
+    document.addEventListener("keyup", e => {
+        if(e.keyCode === 46){
+            clear()
+        }else if(e.keyCode === 8){
+            del()
+        }else if (e.keyCode === 13){
+            equals()
         }
     })
 })
