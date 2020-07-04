@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", ()=>{
     let output = document.getElementsByClassName("output")[0]
     let buttons = document.getElementsByTagName("td")
@@ -23,6 +22,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 if(!firstNum.includes(".") && value == "." && operator.length == 0 || firstNum.length == 0 && value == "-"){
                     firstNum += value
                     output.innerHTML = firstNum
+                }else if(firstNum.length == 1 && firstNum.includes("-")){
+                    console.log("Minus in first number have to be followed by a number or decimal")
                 }else if(!firstNum.includes("-") && firstNum.length > 0 && isNaN(value) && !value == "." || firstNum.includes("-") && firstNum.length > 1 && isNaN(value) && !value == "." || firstNum.length > 0 && "+-/*".includes(value)){
                     operator = value
                     output.innerHTML = firstNum + " " + operator
@@ -163,7 +164,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }else if(operator == "%" && secondNum.length > 0){   
                 percent(firstNum, secondNum)
             }else{
-                alert("Your Equals func has an error or you are trying to equal nothing")
+                console.log("Your Equals func has an error or you are trying to equal nothing")
             }
     }
 
