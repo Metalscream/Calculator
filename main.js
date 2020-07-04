@@ -116,31 +116,55 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     }
 
+    let oneX = (a) => {
+        output.innerHTML = Number(parseFloat(1/Number(a)).toPrecision(14).toString()).toString()
+        firstNum = output.innerHTML
+        operator = ""
+        secondNum = ""
+    }
+    
+    let percent = (a, b) => {
+        output.innerHTML = Number(parseFloat(Number(a)/100*Number(secondNum)).toPrecision(14).toString()).toString()
+        firstNum = output.innerHTML
+        operator = ""
+        secondNum = ""
+    }
+    
+    let root = (a, b) => {
+        output.innerHTML = Number(parseFloat(Math.sqrt(Number(firstNum))).toPrecision(14).toString()).toString()
+        firstNum = output.innerHTML
+        operator = ""
+        secondNum = ""
+    }
+    
+    let power = (a) => {
+        output.innerHTML = Number(parseFloat(Math.pow(Number(firstNum), 2)).toPrecision(14).toString()).toString()
+        firstNum = output.innerHTML
+        operator = ""
+        secondNum = ""
+    }
+    
     let equals = () => {
         if(operator == "+" && secondNum.length > 0)
             {
                addition(firstNum,secondNum)
-            }
-            else if(operator == "-" && secondNum.length > 0)
-            {   
+            }else if(operator == "-" && secondNum.length > 0){   
                 subtraction(firstNum, secondNum)
-            }
-            else if(operator == "/" && secondNum.length > 0)
-            {   
+            }else if(operator == "/" && secondNum.length > 0){   
                 division(firstNum, secondNum)
-            }
-            else if(operator == "*" && secondNum.length > 0)
-            {   
+            }else if(operator == "*" && secondNum.length > 0){   
                 multiply(firstNum, secondNum)
-            }
-            else
-            {
+            }else if(operator == "%" && secondNum.length > 0){   
+                percent(firstNum, secondNum)
+            }else{
                 alert("Your Equals func has an error or you are trying to equal nothing")
             }
     }
 
     for(let i = 0; i < buttons.length; i++){
-        if(buttons[i].classList.value == "extraButtons"){
+        if(buttons[i].classList.value == "output"){
+            continue
+        }else if(buttons[i].classList.value == "extraButtons"){
             if(buttons[i].id == "delete"){
                 buttons[i].addEventListener("click", ()=>{
                     del()
@@ -156,8 +180,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }else{
                 console.log("couldnt find id of extra button or something")
             }
-        }
-        else if(buttons[i].classList.value == "operator"){
+        }else if(buttons[i].classList.value == "operator"){
             if(buttons[i].id == "add"){
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
@@ -191,7 +214,52 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         addToOutput(e.target.innerHTML)
                     }
                 })
+            }else if(buttons[i].id == "oneX"){
+                buttons[i].addEventListener("click", e=>{
+                    if(secondNum.length != 0){
+                        firstNum  = Number(parseFloat(1/Number(firstNum)).toPrecision(14).toString()).toString()
+                        output.innerHTML = firstNum + " " + operator
+                        operator = ""
+                        secondNum = ""
+                    }else{
+                        oneX(firstNum)
+                    }
+                })
+            }else if(buttons[i].id == "percent"){
+                buttons[i].addEventListener("click", e=>{
+                    if(secondNum.length != 0){
+                        firstNum  = Number(parseFloat(Number(firstNum)/100*Number(secondNum)).toPrecision(14).toString()).toString()
+                        output.innerHTML = firstNum + " " + operator
+                        operator = "%"
+                        secondNum = ""
+                    }else{
+                        addToOutput(e.target.innerHTML)
+                    }
+                })
+            }else if(buttons[i].id == "root"){
+                buttons[i].addEventListener("click", e=>{
+                    if(secondNum.length != 0){
+                        firstNum  = Number(parseFloat(Math.sqrt(Number(firstNum))).toPrecision(14).toString()).toString()
+                        output.innerHTML = firstNum + " " + operator
+                        operator = ""
+                        secondNum = ""
+                    }else{
+                        root(firstNum)
+                    }
+                })
+            }else if(buttons[i].id == "power"){
+                buttons[i].addEventListener("click", e=>{
+                    if(secondNum.length != 0){
+                        firstNum  = Number(parseFloat(Math.pow(Number(firstNum), Number(secondNum))).toPrecision(14).toString()).toString()
+                        output.innerHTML = firstNum + " " + operator
+                        operator = ""
+                        secondNum = ""
+                    }else{
+                        power(firstNum)
+                    }
+                })
             }else{
+                //multiply
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
                         firstNum  = Number(parseFloat(Number(firstNum)*Number(secondNum)).toPrecision(14).toString()).toString()
@@ -266,3 +334,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     })
 })
+
+// 4 more buttons - 1. Percents 2. 1\x 3. power 4. Root
