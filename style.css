@@ -34,14 +34,18 @@ table td button{
     width: 100%;
     height: 100%;
 }
+
+
 table td button:hover{
     transition-duration: .5s;
     background-color: rgb(90, 90, 90);
 }
+
 table td button:active{
-    background-color: rgb(160, 160, 160);
+    background-color: rgb(180, 180, 180);
     color: rgb(0,0,0);
 }
+
 
 .wrapper{
     width: 20%;
@@ -49,7 +53,26 @@ table td button:active{
     overflow: hidden;
 }
 
+
 .output{
     height: 20%;
     overflow: hidden;
+}
+
+.number{
+    background-color: rgb(225, 225, 0);
+} 
+
+.number button:hover{
+    background-color: rgb(175, 175, 0);
+
+}
+
+.number button:active{
+    background-color: rgb(125, 125, 0);
+
+}
+
+.number button{
+    color: black;
 }

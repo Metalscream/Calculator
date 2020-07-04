@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     secondNum += value
                     output.innerHTML = firstNum + " " + operator + " " + secondNum
                 }else{
-                    alert("Woopsy, what you are trying to do is illegal, pleace proceede according to common sense")
+                    console.log("Woopsy, what you are trying to do is illegal, pleace proceede according to common sense")
                 }
             }
             else if(firstNum.length > 0 && operator.length == 1){
@@ -117,10 +117,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
 
     let oneX = (a) => {
-        output.innerHTML = Number(parseFloat(1/Number(a)).toPrecision(14).toString()).toString()
-        firstNum = output.innerHTML
-        operator = ""
-        secondNum = ""
+        if(firstNum){
+            output.innerHTML = Number(parseFloat(1/Number(a)).toPrecision(14).toString()).toString()
+            firstNum = output.innerHTML
+            operator = ""
+            secondNum = ""
+        }
     }
     
     let percent = (a, b) => {
@@ -131,17 +133,21 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
     
     let root = (a, b) => {
-        output.innerHTML = Number(parseFloat(Math.sqrt(Number(firstNum))).toPrecision(14).toString()).toString()
-        firstNum = output.innerHTML
-        operator = ""
-        secondNum = ""
+        if(firstNum){
+            output.innerHTML = Number(parseFloat(Math.sqrt(Number(firstNum))).toPrecision(14).toString()).toString()
+            firstNum = output.innerHTML
+            operator = ""
+            secondNum = ""
+        }
     }
     
     let power = (a) => {
-        output.innerHTML = Number(parseFloat(Math.pow(Number(firstNum), 2)).toPrecision(14).toString()).toString()
-        firstNum = output.innerHTML
-        operator = ""
-        secondNum = ""
+        if(firstNum){
+            output.innerHTML = Number(parseFloat(Math.pow(Number(firstNum), 2)).toPrecision(14).toString()).toString()
+            firstNum = output.innerHTML
+            operator = ""
+            secondNum = ""
+        }
     }
     
     let equals = () => {
