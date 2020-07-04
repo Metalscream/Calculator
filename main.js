@@ -259,7 +259,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     }
                 })
             }else{
-                //multiply
                 buttons[i].addEventListener("click", e=>{
                     if(secondNum.length != 0){
                         firstNum  = Number(parseFloat(Number(firstNum)*Number(secondNum)).toPrecision(14).toString()).toString()
@@ -334,5 +333,3 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     })
 })
-
-// 4 more buttons - 1. Percents 2. 1\x 3. power 4. Root
